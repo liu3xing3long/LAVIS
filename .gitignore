@@ -154,3 +154,10 @@ debug*/
 *.gz
 
 cache/
+data/medicat
+data/mimic
+data/roco
+data/anno/
+
+docs/
+assets

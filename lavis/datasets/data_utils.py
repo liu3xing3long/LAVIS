@@ -132,6 +132,8 @@ def concat_datasets(datasets):
 
     """
     # concatenate datasets in the same split
+
+    print(datasets)
     for split_name in datasets:
         if split_name != "train":
             assert (

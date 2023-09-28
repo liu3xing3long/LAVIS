@@ -38,6 +38,12 @@ from lavis.datasets.builders.retrieval_builder import (
 )
 from lavis.datasets.builders.dialogue_builder import AVSDDialBuilder
 from lavis.datasets.builders.text_to_image_generation_builder import BlipDiffusionFinetuneBuilder
+from lavis.datasets.builders.medcaption_builder import (
+    MIMICCapBuilder, 
+    MedICaTCapBuilder,
+    ROCOCapBuilder,
+)
+
 
 from lavis.common.registry import registry
 
@@ -65,6 +71,12 @@ __all__ = [
     "VGCaptionBuilder",
     "VGVQABuilder",
     "AVSDDialBuilder",
+
+    ##########################################
+    'MIMICCapBuilder',
+    'MedICaTCapBuilder',
+    'ROCOCapBuilder',
+    ##########################################
 ]
 
 
@@ -101,7 +113,6 @@ def load_dataset(name, cfg_path=None, vis_path=None, data_type=None):
         ), f"Invalid data_type {data_type} for {name}."
 
         builder.config.build_info.get(data_type).storage = vis_path
-
     dataset = builder.build_datasets()
     return dataset
 

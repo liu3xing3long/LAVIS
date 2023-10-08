@@ -59,9 +59,35 @@ def init_distributed_mode(args):
         args.rank = int(os.environ["RANK"])
         args.world_size = int(os.environ["WORLD_SIZE"])
         args.gpu = int(os.environ["LOCAL_RANK"])
+
     elif "SLURM_PROCID" in os.environ:
-        args.rank = int(os.environ["SLURM_PROCID"])
+        # args.rank = int(os.environ["SLURM_PROCID"])
+        # args.gpu = args.rank % torch.cuda.device_count()
+        proc_id = int(os.environ['SLURM_PROCID'])
+        ntasks = int(os.environ['SLURM_NTASKS'])
+        node_list = os.environ['SLURM_NODELIST']
+        num_gpus = torch.cuda.device_count()
+        torch.cuda.set_device(proc_id % num_gpus)
+
+        if '[' in node_list:
+            beg = node_list.find('[')
+            pos1 = node_list.find('-', beg)
+            if pos1 < 0:
+                pos1 = 1000
+            pos2 = node_list.find(',', beg)
+            if pos2 < 0:
+                pos2 = 1000
+            node_list = node_list[:min(pos1, pos2)].replace('[', '')
+        addr = node_list[8:].replace('-', '.')
+
+        os.environ['MASTER_ADDR'] = addr
+        os.environ['WORLD_SIZE'] = str(ntasks)
+        os.environ['RANK'] = str(proc_id)
+
+        args.rank = int(os.environ['SLURM_PROCID'])
         args.gpu = args.rank % torch.cuda.device_count()
+        args.world_size = ntasks
+
     else:
         print("Not using distributed mode")
         args.distributed = False

@@ -4,13 +4,17 @@
  # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
-  arch: blip2_opt
-  model_type: pretrain_opt2.7b 
-  load_pretrained: True
-  # intialize stage 2 pretraining from stage 1 pretrained model
-  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"
-  freeze_vit: True
+#  arch: blip2_opt
+#  model_type: pretrain_opt2.7b
 
+  arch: blip2_vicuna_instruct
+  model_type: vicuna7b
+
+  # intialize stage 2 pretraining from stage 1 pretrained model
+#  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"
+  load_pretrained: True
+  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231007113/checkpoint_39.pth"
+  freeze_vit: True
 
 datasets:
   coco_caption:
@@ -61,6 +65,6 @@ run:
   train_splits: ["train"]
 
   device: "cuda"
-  world_size: 1
+  world_size: 16
   dist_url: "env://"
   distributed: True

@@ -15,9 +15,9 @@ model:
   
   load_pretrained: True
   # intialize stage 2 pretraining from stage 1 pretrained model
-  pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
+#  pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
+  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231007113/checkpoint_39.pth"
   freeze_vit: True
-
 
 datasets:
   mimic_caption:
@@ -125,6 +125,6 @@ run:
   train_splits: ["train"]
 
   device: "cuda"
-  world_size: 1
+  world_size: 16
   dist_url: "env://"
   distributed: True

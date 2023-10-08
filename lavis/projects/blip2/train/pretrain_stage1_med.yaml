@@ -6,7 +6,11 @@
 model:
   arch: blip2
   model_type: pretrain
-  load_pretrained: False #pretrain from scratch
+
+#  load_pretrained: False #pretrain from scratch
+  load_pretrained: True
+  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928234/checkpoint_9.pth"
+
   freeze_vit: True
 
 
@@ -67,7 +71,7 @@ datasets:
           #   url: anno/medicat_test.json
           #   storage: anno/medicat_test.json
         images:
-          storage: 'medicat/figures/'
+          storage: medicat/figures/
 
   roco_caption:
     data_type: images
@@ -90,7 +94,7 @@ datasets:
             url: anno/roco_test.json
             storage: anno/roco_test.json
         images:
-          storage: 'roco/data/rad_images_all/'
+          storage: roco/data/rad_images_all/
 
 run:
   task: image_text_pretrain
@@ -101,7 +105,7 @@ run:
   warmup_lr: 1e-6
 
   weight_decay: 0.05
-  max_epoch: 10
+  max_epoch: 40
   batch_size_train: 100
   batch_size_eval: 64
   num_workers: 4
@@ -117,6 +121,7 @@ run:
   train_splits: ["train"]
 
   device: "cuda"
-  world_size: 1
+  world_size: 16
   dist_url: "env://"
   distributed: True
+  port: 28500

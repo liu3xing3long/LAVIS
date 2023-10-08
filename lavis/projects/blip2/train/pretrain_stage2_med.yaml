@@ -4,16 +4,24 @@
  # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
-  arch: blip2_opt
-  model_type: pretrain_opt2.7b 
+  # arch: blip2_opt
+  # model_type: pretrain_opt2.7b 
+
+  # arch: blip2_vicuna_instruct
+  # model_type: vicuna7b
+
+  arch: blip2_vicuna
+  model_type: vicuna7b
+  
   load_pretrained: True
   # intialize stage 2 pretraining from stage 1 pretrained model
-  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained.pth"
+  pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
   freeze_vit: True
 
 
 datasets:
-  coco_caption:
+  mimic_caption:
+    data_type: images
     vis_processor:
         train:
           name: "blip2_image_train"
@@ -21,10 +29,28 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
-    # build_info:
-    #     images:
-    #         storage: '/export/share/datasets/vision/coco/images/'          
-  vg_caption: # name of the dataset builder
+    build_info:
+      annotations:
+        train:
+          url: 
+            - anno/mimic_cxr_train.json
+            - anno/mimic_cxr_val.json
+            - anno/mimic_cxr_test.json
+          storage: 
+            - anno/mimic_cxr_train.json
+            - anno/mimic_cxr_val.json
+            - anno/mimic_cxr_test.json
+        # val:
+        #   url: anno/mimic_cxr_val.json
+        #   storage: anno/mimic_cxr_val.json
+        # test:
+        #   url: anno/mimic_cxr_test.json
+        #   storage: anno/mimic_cxr_test.json
+      images:
+        storage: mimic/mimic-cxr-jpg-512/images/
+  
+  medicat_caption:
+    data_type: images
     vis_processor:
         train:
           name: "blip_image_train"
@@ -32,10 +58,48 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
-    # build_info:
-    #     images:
-    #         storage: '//export/share/datasets/vision/visual-genome/image/'
+    build_info:
+        annotations:
+          train:
+            url: 
+              - anno/medicat_train.json
+              - anno/medicat_val.json
+              - anno/medicat_test.json
+            storage: 
+              - anno/medicat_train.json
+              - anno/medicat_val.json
+              - anno/medicat_test.json
+          # val:
+          #   url: anno/medicat_val.json
+          #   storage: anno/medicat_val.json
+          # test:
+          #   url: anno/medicat_test.json
+          #   storage: anno/medicat_test.json
+        images:
+          storage: 'medicat/figures/'
 
+  roco_caption:
+    data_type: images
+    vis_processor:
+        train:
+          name: "blip_image_train"
+          image_size: 224
+    text_processor:
+        train:
+          name: "blip_caption"
+    build_info:
+        annotations:
+          train:
+            url: anno/roco_train.json
+            storage: anno/roco_train.json
+          val:
+            url: anno/roco_val.json
+            storage: anno/roco_val.json
+          test:
+            url: anno/roco_test.json
+            storage: anno/roco_test.json
+        images:
+          storage: 'roco/data/rad_images_all/'
 run:
   task: image_text_pretrain
   # optimizer
@@ -46,8 +110,8 @@ run:
 
   weight_decay: 0.05
   max_epoch: 10
-  batch_size_train: 64
-  batch_size_eval: 64
+  batch_size_train: 16
+  batch_size_eval: 32
   num_workers: 4
   warmup_steps: 2000
 

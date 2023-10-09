@@ -87,12 +87,12 @@ datasets:
           train:
             url: anno/roco_train.json
             storage: anno/roco_train.json
-          val:
-            url: anno/roco_val.json
-            storage: anno/roco_val.json
-          test:
-            url: anno/roco_test.json
-            storage: anno/roco_test.json
+          # val:
+          #   url: anno/roco_val.json
+          #   storage: anno/roco_val.json
+          # test:
+          #   url: anno/roco_test.json
+          #   storage: anno/roco_test.json
         images:
           storage: roco/data/rad_images_all/
 

@@ -27,6 +27,7 @@ class Blip2VicunaInstruct(Blip2Base):
     """
 
     PRETRAINED_MODEL_CONFIG_DICT = {
+        "infer_vicuna7b": "configs/models/blip2/blip2_instruct_vicuna7b_infer.yaml",
         "vicuna7b": "configs/models/blip2/blip2_instruct_vicuna7b.yaml",
         "vicuna13b": "configs/models/blip2/blip2_instruct_vicuna13b.yaml",
     }
@@ -141,6 +142,20 @@ class Blip2VicunaInstruct(Blip2Base):
         # print(samples["text_input"])
         # print(samples["text_output"])
         # print('-----------------')
+
+        if "text_input" in samples and "text_output" in samples:
+            pass
+        else:
+            sinput = samples["text_input"]
+            len_sinput = len(sinput)
+            samples["text_input"] = list(["Question: describe the image. Answer:", ] * len_sinput)
+            samples["text_output"] = sinput
+
+        # print('->' * 20)
+        # for si in sinput:
+        #     print('-' * 10)
+        #     print(si)
+        # print('<-' * 20)
 
         image = samples["image"]
         with self.maybe_autocast():

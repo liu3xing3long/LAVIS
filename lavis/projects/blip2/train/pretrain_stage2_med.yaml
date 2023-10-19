@@ -4,20 +4,22 @@
  # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
-  # arch: blip2_opt
-  # model_type: pretrain_opt2.7b 
+#   arch: blip2_opt
+#   model_type: pretrain_opt2.7b
 
   # arch: blip2_vicuna_instruct
   # model_type: vicuna7b
 
-  arch: blip2_vicuna
-  model_type: vicuna7b
+   arch: blip2_vicuna
+   model_type: vicuna7b
   
-  load_pretrained: True
-  # intialize stage 2 pretraining from stage 1 pretrained model
-#  pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
-  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231007113/checkpoint_39.pth"
-  freeze_vit: True
+   load_pretrained: True
+   # intialize stage 2 pretraining from stage 1 pretrained model
+   # pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
+   # pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231007113/checkpoint_39.pth"
+#   pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231011152/checkpoint_9.pth"
+   pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231012183/checkpoint_9.pth"
+   freeze_vit: True
 
 datasets:
   mimic_caption:
@@ -29,6 +31,7 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
+          max_words: 100
     build_info:
       annotations:
         train:
@@ -58,6 +61,7 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
+          max_words: 100
     build_info:
         annotations:
           train:
@@ -87,17 +91,25 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
+          max_words: 100
     build_info:
         annotations:
           train:
-            url: anno/roco_train.json
-            storage: anno/roco_train.json
-          val:
-            url: anno/roco_val.json
-            storage: anno/roco_val.json
-          test:
-            url: anno/roco_test.json
-            storage: anno/roco_test.json
+            url:
+              - anno/roco_train.json
+              - anno/roco_val.json
+              - anno/roco_test.json
+            storage:
+              - anno/roco_train.json
+              - anno/roco_val.json
+              - anno/roco_test.json
+
+#          val:
+#            url: anno/roco_val.json
+#            storage: anno/roco_val.json
+#          test:
+#            url: anno/roco_test.json
+#            storage: anno/roco_test.json
         images:
           storage: 'roco/data/rad_images_all/'
 run:
@@ -110,8 +122,8 @@ run:
 
   weight_decay: 0.05
   max_epoch: 10
-  batch_size_train: 16
-  batch_size_eval: 32
+  batch_size_train: 8
+  batch_size_eval: 16
   num_workers: 4
   warmup_steps: 2000
 
@@ -125,6 +137,6 @@ run:
   train_splits: ["train"]
 
   device: "cuda"
-  world_size: 16
+  world_size: 14
   dist_url: "env://"
   distributed: True

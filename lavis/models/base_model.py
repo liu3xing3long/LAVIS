@@ -92,6 +92,9 @@ class BaseModel(nn.Module):
             assert (
                 finetune_path is not None
             ), "Found load_finetuned is True, but finetune_path is None."
+            #############################################################
+            logging.info(fr'loading finetuned ckpt from {finetune_path}')
+            #############################################################
             self.load_checkpoint(url_or_filename=finetune_path)
         else:
             load_pretrained = cfg.get("load_pretrained", True)
@@ -99,6 +102,9 @@ class BaseModel(nn.Module):
                 # load pre-trained weights
                 pretrain_path = cfg.get("pretrained", None)
                 assert "Found load_finetuned is False, but pretrain_path is None."
+                #############################################################
+                logging.info(fr'loading pretrained ckpt from {pretrain_path}')
+                #############################################################
                 self.load_from_pretrained(url_or_filename=pretrain_path, **kwargs)
 
     def before_training(self, **kwargs):

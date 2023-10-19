@@ -6,16 +6,18 @@
 model:
   arch: instruct_vicuna7b
   load_finetuned: False
-  load_pretrained: True
+  load_pretrained: Fasle
+#  load_pretrained: True
 
-  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/InstructBLIP/instruct_blip_vicuna7b_trimmed.pth"
-#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231012001/checkpoint_9.pth",
-#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231013005/checkpoint_9.pth",
+#  pretrained: ""
+#  pretrained: "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/InstructBLIP/instruct_blip_vicuna7b_trimmed.pth"
+#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231012001/checkpoint_9.pth"
+#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231013005/checkpoint_9.pth"
+
   # pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231010105/checkpoint_9.pth"
-  # pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231012064/checkpoint_8.pth"
-#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231012064/checkpoint_8.pth"
 #  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231013114/checkpoint_9.pth"
-#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231017093/checkpoint_2.pth"
+#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231017093/checkpoint_9.pth"
+#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Instruct_BLIP/20231012064/checkpoint_9.pth"
   finetuned: ""
 
   # vit encoder

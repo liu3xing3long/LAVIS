@@ -167,8 +167,6 @@ class Blip2Vicuna(Blip2Base):
             )
 
         loss = outputs.loss
-        print(fr'loss: {loss}')
-
         return {"loss": loss}
 
     @torch.no_grad()

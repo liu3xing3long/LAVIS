@@ -4,15 +4,16 @@
  # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
-  arch: blip2
-  model_type: pretrain
+   arch: blip2_vicuna_instruct
+   model_type: vicuna7b
 
-#  load_pretrained: False #pretrain from scratch
-  load_pretrained: True
-  pretrained: "/mnt/lustrenew/liuxinglong/.cache/torch/hub/checkpoints/blip2_pretrained.pth"
-#  pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928234/checkpoint_9.pth"
-  freeze_vit: True
-
+   load_pretrained: True
+   # pretrained: "/home/liuxinglong/work/code/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20230928151/checkpoint_9.pth"
+   # pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage1/20231007113/checkpoint_39.pth"
+#   pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231009140/checkpoint_9.pth"
+#   pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231012001/checkpoint_9.pth"
+   pretrained: "/mnt/lustrenew/liuxinglong/work/LAVIS/lavis/output/BLIP2/Pretrain_stage2/20231013005/checkpoint_9.pth"
+   freeze_vit: True
 
 datasets:
   mimic_caption:
@@ -24,7 +25,7 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
-          max_words: 100
+#          max_words: 100
     build_info:
       annotations:
         train:
@@ -54,7 +55,7 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
-          max_words: 100
+#          max_words: 100
     build_info:
         annotations:
           train:
@@ -73,7 +74,7 @@ datasets:
           #   url: anno/medicat_test.json
           #   storage: anno/medicat_test.json
         images:
-          storage: medicat/figures/
+          storage: 'medicat/figures/'
 
   roco_caption:
     data_type: images
@@ -84,21 +85,27 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"
-          max_words: 100
+#          max_words: 100
     build_info:
         annotations:
           train:
-            url: anno/roco_train.json
-            storage: anno/roco_train.json
-          # val:
-          #   url: anno/roco_val.json
-          #   storage: anno/roco_val.json
-          # test:
-          #   url: anno/roco_test.json
-          #   storage: anno/roco_test.json
-        images:
-          storage: roco/data/rad_images_all/
+            url:
+              - anno/roco_train.json
+              - anno/roco_val.json
+              - anno/roco_test.json
+            storage:
+              - anno/roco_train.json
+              - anno/roco_val.json
+              - anno/roco_test.json
 
+#          val:
+#            url: anno/roco_val.json
+#            storage: anno/roco_val.json
+#          test:
+#            url: anno/roco_test.json
+#            storage: anno/roco_test.json
+        images:
+          storage: 'roco/data/rad_images_all/'
 run:
   task: image_text_pretrain
   # optimizer
@@ -109,13 +116,13 @@ run:
 
   weight_decay: 0.05
   max_epoch: 10
-  batch_size_train: 100
-  batch_size_eval: 64
+  batch_size_train: 4
+  batch_size_eval: 8
   num_workers: 4
-  warmup_steps: 5000
+  warmup_steps: 2000
 
   seed: 42
-  output_dir: "output/BLIP2/Pretrain_stage1"
+  output_dir: "output/BLIP2/Instruct_BLIP"
 
   amp: True
   resume_ckpt_path: null
@@ -124,7 +131,6 @@ run:
   train_splits: ["train"]
 
   device: "cuda"
-  world_size: 8
+  world_size: 14
   dist_url: "env://"
   distributed: True
-  port: 28500

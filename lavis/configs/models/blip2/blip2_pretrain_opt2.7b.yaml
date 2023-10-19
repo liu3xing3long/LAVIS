@@ -21,7 +21,7 @@ model:
   num_query_token: 32
 
   # OPT
-  opt_model: "facebook/opt-2.7b"
+  opt_model: "./llm/opt-2.7b"
 
   # generation configs
   prompt: ""
